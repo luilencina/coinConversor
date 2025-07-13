@@ -1,4 +1,4 @@
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -11,21 +11,15 @@ export class ThemeService {
       const stored = localStorage.getItem('dark-mode');
       this.darkMode.set(stored === 'true');
 
-      if (this.darkMode()) {
-        document.body.classList.add('dark-mode');
-      }
+      if (this.darkMode()) document.body.classList.add('dark-mode');
+      
     }
   }
 
   toggleTheme() {
     this.darkMode.set(!this.darkMode());
-    console.log('toggleTheme clicked!');
     if (typeof window !== 'undefined') {
-      if (this.darkMode()) {
-        document.body.classList.add('dark-mode');
-      } else {
-        document.body.classList.remove('dark-mode');
-      }
+      this.darkMode() ? document.body.classList.add('dark-mode') : document.body.classList.remove('dark-mode')
       localStorage.setItem('dark-mode', this.darkMode().toString());
     }
   }

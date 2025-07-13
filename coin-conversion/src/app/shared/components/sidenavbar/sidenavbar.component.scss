@@ -1,8 +1,10 @@
+@use '../../../assets/colors/colors' as *;
+
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #007bff;
+  background-color: $color-primary;
   padding: 1rem;
 
   .logo a {
