@@ -25,6 +25,6 @@ export class ThemeService {
   }
 
   isDarkMode() {
-    return this.darkMode.asReadonly();
+    return this.darkMode();
   }
 }

@@ -4,9 +4,10 @@
   </div>
   <ul class="nav-links">
     <li>
-      <button (click)="toggleTheme()">
-        {{ isDarkMode() ? 'Light Mode' : 'Dark Mode' }}
-    </button>
+      <app-button
+        (clicked)="toggleTheme()"
+        [icon]="isDarkMode() ? 'dark_mode' : 'light_mode'"
+      ></app-button>
     </li>
   </ul>
 </nav>

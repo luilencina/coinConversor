@@ -1,0 +1,10 @@
+@use '../../../assets/colors/colors' as *;
+
+mat-grid-tile {
+  border-radius: 5%;
+  background: $color-bg-light;
+}
+
+section {
+    padding: 1rem;
+}

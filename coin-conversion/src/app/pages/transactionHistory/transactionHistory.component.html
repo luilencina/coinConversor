@@ -1,0 +1,78 @@
+<h2>Histórico de Transações</h2>
+
+<div class="filters">
+  <mat-form-field>
+    <mat-label>Moeda de Origem</mat-label>
+    <mat-select [(ngModel)]="filterOrigin">
+      <mat-option value="">Todas</mat-option>
+      <mat-option *ngFor="let c of currencies" [value]="c">{{ c }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Moeda de Destino</mat-label>
+    <mat-select [(ngModel)]="filterDest">
+      <mat-option value="">Todas</mat-option>
+      <mat-option *ngFor="let c of currencies" [value]="c">{{ c }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Data</mat-label>
+    <input matInput [matDatepicker]="picker" [(ngModel)]="filterDate" />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Valor Mínimo</mat-label>
+    <input matInput type="number" [(ngModel)]="filterMinAmount" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Valor Máximo</mat-label>
+    <input matInput type="number" [(ngModel)]="filterMaxAmount" />
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="applyFilters()">
+    Aplicar Filtros
+  </button>
+  <!-- <button mat-raised-button (click)="clearFilters()">Limpar</button> -->
+</div>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef>ID</th>
+    <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="originCurrency">
+    <th mat-header-cell *matHeaderCellDef>Moeda Origem</th>
+    <td mat-cell *matCellDef="let element">{{ element.originCurrency }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="destinationCurrency">
+    <th mat-header-cell *matHeaderCellDef>Moeda Destino</th>
+    <td mat-cell *matCellDef="let element">{{ element.destinationCurrency }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="amount">
+    <th mat-header-cell *matHeaderCellDef>Valor</th>
+    <td mat-cell *matCellDef="let element">{{ element.amount | currency }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="date">
+    <th mat-header-cell *matHeaderCellDef>Data/Hora</th>
+    <td mat-cell *matCellDef="let element">{{ element.date | date: 'short' }}</td>
+  </ng-container>
+
+  <tr
+    mat-row
+    *matRowDef="let row; columns: displayedColumns"
+    (click)="openDetails(row)"
+    style="cursor: pointer"
+  ></tr>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+</table>
+
+<mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>

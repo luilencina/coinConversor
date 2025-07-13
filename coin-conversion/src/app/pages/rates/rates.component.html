@@ -1,0 +1,15 @@
+<h2>Consulta de Taxas</h2>
+
+<p><strong>Taxa Atual:</strong> {{ newRate }}</p>
+
+<button mat-raised-button color="primary" (click)="openModal()">
+  Atualizar Taxa
+</button>
+
+<hr />
+<small><strong>Observações:</strong></small>
+<ul>
+  <li>1 Ouro Real equivale a {{ newRate }} Tibares</li>
+  <li>Essa taxa pode variar diariamente conforme a demanda no mercado.</li>
+  <li>O mercado não aceita nenhum tipo de comércio de objetos/pessoas de forma a ferir valores morais.</li>
+</ul>

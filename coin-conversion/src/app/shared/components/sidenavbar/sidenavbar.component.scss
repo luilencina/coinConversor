@@ -1,10 +1,10 @@
-@use '../../../assets/colors/colors' as *;
+@use '../../../../assets/colors/colors' as *;
 
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: $color-primary;
+  background-color: $color-bg-light;
   padding: 1rem;
 
   .logo a {

@@ -20,3 +20,7 @@ body.dark-mode .navbar {
 body.dark-mode .navbar a {
   color: #fff;
 }
+
+body.dark-mode mat-grid-tile {
+  background-color: $color-intermediary-bg;
+}

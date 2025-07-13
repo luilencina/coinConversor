@@ -1,0 +1,16 @@
+.conversion-container {
+  max-width: 400px;
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.result {
+  margin-top: 16px;
+  font-size: 1.2rem;
+}

@@ -1,0 +1,27 @@
+<!-- Botão somente ícone -->
+@if (icon && !label) {
+  <button
+    mat-icon-button
+    [disabled]="disabled"
+    (click)="handleClick()"
+  >
+    <mat-icon>{{ icon }}</mat-icon>
+  </button>
+}
+
+<!-- Botão texto ou texto+ícone -->
+@else {
+  <button
+    mat-button
+    matButton="filled"
+    [disabled]="disabled"
+    (click)="handleClick()"
+  >
+    @if (icon) {
+      <mat-icon>{{ icon }}</mat-icon>
+    }
+    @if (label) {
+      <span>{{ label }}</span>
+    }
+  </button>
+}
