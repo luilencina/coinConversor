@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { RatesComponent } from '../rates/rates.component';
 import { ConversionComponent } from '../conversion/conversion.component';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { TransactionHistoryComponent } from '../transactionHistory/transactionHistory.component';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +13,6 @@ import { TransactionHistoryComponent } from '../transactionHistory/transactionHi
     RatesComponent,
     ConversionComponent,
     MatGridListModule,
-    TransactionHistoryComponent
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
