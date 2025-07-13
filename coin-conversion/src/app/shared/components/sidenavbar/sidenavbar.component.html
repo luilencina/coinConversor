@@ -1,0 +1,15 @@
+<nav class="navbar">
+  <div class="logo">
+    <a routerLink="/">Coin Conversion</a>
+  </div>
+  <ul class="nav-links">
+    <li><a routerLink="/">Home</a></li>
+    <li><a routerLink="/about">About</a></li>
+    <li><a routerLink="/contact">Contact</a></li>
+    <li>
+      <button (click)="toggleTheme()">
+  {{ isDarkMode() ? 'Light Mode' : 'Dark Mode' }}
+</button>
+    </li>
+  </ul>
+</nav>

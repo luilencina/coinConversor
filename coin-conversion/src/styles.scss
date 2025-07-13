@@ -1,0 +1,20 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+/* Dark theme */
+body.dark-mode {
+  background-color: #121212;
+  color: #eee;
+}
+
+/* Exemplo para navbar (opcional) */
+body.dark-mode .navbar {
+  background-color: #333;
+}
+
+body.dark-mode .navbar a {
+  color: #fff;
+}
