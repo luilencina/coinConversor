@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { ExchangeRateService } from '../../core/services/exchange-rate.service';
 import { ModalComponent } from '../../shared/components/dialog/modal.component';
+import { ButtonComponent } from '../../shared/components/button/button.component';
 
 @Component({
   selector: 'app-rates',
@@ -19,6 +20,7 @@ import { ModalComponent } from '../../shared/components/dialog/modal.component';
     MatInputModule,
     MatButtonModule,
     MatDialogModule,
+    ButtonComponent
   ],
   templateUrl: './rates.component.html',
   styleUrls: ['./rates.component.scss']

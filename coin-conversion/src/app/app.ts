@@ -2,6 +2,7 @@ import { Component, signal } from '@angular/core';
 import { NavbarComponent } from './shared/components/sidenavbar/sidenavbar.component';
 import { RouterOutlet } from '@angular/router';
 
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -9,6 +10,7 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.html',
   styleUrls: ['./app.scss']
 })
+
 export class App {
   protected readonly title = signal('coin-conversion');
 }

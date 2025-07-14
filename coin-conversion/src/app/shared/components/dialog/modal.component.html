@@ -3,12 +3,12 @@
 <mat-dialog-content id="content-dialog">
   <label for="rateInput">Nova taxa</label>
 
-  <mat-form-field class="example-full-width">
+  <mat-form-field appearance="outline" class="example-full-width">
     <input id="rateInput" type="number" matInput step="0.01" min="0" placeholder="{{rate}}" [(ngModel)]="rate">
   </mat-form-field>
 
 </mat-dialog-content>
-<mat-dialog-actions>
+<mat-dialog-actions id="actions-dialog">
   <app-button mat-button (clicked)="cancel()" label="Cancelar"/>
   <app-button mat-button color="primary" (clicked)="save()" label="Salvar"/>
 </mat-dialog-actions>

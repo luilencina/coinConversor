@@ -4,7 +4,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: $color-bg-light;
+  background-color: $color-primary;
   padding: 1rem;
 
   .logo a {
@@ -29,27 +29,4 @@
       }
     }
   }
-}
-
-.navbar button {
-  background: none;
-  border: 1px solid #fff;
-  color: #fff;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  border-radius: 4px;
-
-  &:hover {
-    background-color: rgba(255,255,255,0.2);
-  }
-}
-
-body.dark-mode .navbar button {
-  border-color: #fff;
-  color: #fff;
-}
-
-body:not(.dark-mode) .navbar button {
-  border-color: #333;
-  color: #333;
 }

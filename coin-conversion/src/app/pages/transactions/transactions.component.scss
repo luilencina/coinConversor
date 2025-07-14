@@ -1,0 +1,70 @@
+.filters {
+  display:flex;
+  gap: 12px; 
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 16px;
+  flex-direction: row;
+}
+
+.filters mat-form-field{
+  width: 100%;
+}
+
+.title{
+  text-align: left;
+  width: 100%;
+}
+
+.filters label {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.transaction-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.transaction-table th,
+.transaction-table td {
+  padding: 8px;
+  text-align: left;
+}
+
+.transaction-table tr.clickable-row {
+  cursor: pointer;
+}
+
+.transaction-table tr.clickable-row:hover {
+  background-color: #f0f0f0;
+}
+
+.pagination {
+  margin-top: 15px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  margin: 100px auto;
+  width: 400px;
+  border-radius: 8px;
+}
+
+app-transaction{
+  width: 100%;
+}
+
+mat-paginator{
+  width: 100%;
+}

@@ -1,0 +1,71 @@
+<h2 class="title">Filtros</h2>
+<div class="filters">
+  <mat-form-field appearance="outline">
+    <mat-label>Moeda Origem</mat-label>
+    <input matInput [(ngModel)]="filterOrigin" (ngModelChange)="applyFilters()" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Moeda Destino</mat-label>
+    <input matInput [(ngModel)]="filterDestination" (ngModelChange)="applyFilters()" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Data</mat-label>
+    <input matInput type="date" [(ngModel)]="filterDate" (ngModelChange)="applyFilters()" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Valor mínimo</mat-label>
+    <input matInput type="number" [(ngModel)]="filterMinAmount" (ngModelChange)="applyFilters()" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Valor máximo</mat-label>
+    <input matInput type="number" [(ngModel)]="filterMaxAmount" (ngModelChange)="applyFilters()" />
+  </mat-form-field>
+</div>
+
+<h2 class="title">Histórico de Transações</h2>
+<mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width: 100%;">
+
+  <ng-container matColumnDef="id">
+    <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+    <mat-cell *matCellDef="let t"> {{ t.id }} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="originCurrency">
+    <mat-header-cell *matHeaderCellDef> Origem </mat-header-cell>
+    <mat-cell *matCellDef="let t"> {{ t.originCurrency }} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="destinationCurrency">
+    <mat-header-cell *matHeaderCellDef> Destino </mat-header-cell>
+    <mat-cell *matCellDef="let t"> {{ t.destinationCurrency }} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="amount">
+    <mat-header-cell *matHeaderCellDef> Valor </mat-header-cell>
+    <mat-cell *matCellDef="let t"> {{ t.amount }} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="date">
+    <mat-header-cell *matHeaderCellDef> Data/Hora </mat-header-cell>
+    <mat-cell *matCellDef="let t"> {{ convertTimestamp(t.date) | date:'medium' }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef> Ações </mat-header-cell>
+    <mat-cell *matCellDef="let t">
+      <app-button (clicked)="openDetails(t)" matTooltip="Ver detalhes" [icon]="'visibility'"/>
+      <button mat-icon-button color="warn" (click)="deleteTransaction(t.id)" matTooltip="Deletar">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+
+<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>

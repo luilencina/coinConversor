@@ -1,32 +1,48 @@
-<h2>Conversão de Moeda</h2>
+<div class="app-conversion">
+  <div class="conversion-container">
+    <h2>Conversão de Valores</h2>
+    <div id="conversion">
+      <section>
+        <form (ngSubmit)="convert()" id="conversionForm">
+          <mat-form-field appearance="outline">
+            <mat-label>Moeda Origem</mat-label>
+            <mat-select [(ngModel)]="originCurrency" name="originCurrency" required>
+              <mat-option *ngFor="let c of currencies" [value]="c">{{ c }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        
+          <mat-form-field appearance="outline">
+            <mat-label>Moeda Destino</mat-label>
+            <mat-select [(ngModel)]="destinationCurrency" name="destinationCurrency" required>
+              <mat-option *ngFor="let c of currencies" [value]="c">{{ c }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        
+          <mat-form-field appearance="outline">
+            <mat-label>Valor</mat-label>
+            <input matInput type="number" [(ngModel)]="amount" name="amount" required />
+          </mat-form-field>
+        
+          <app-button mat-raised-button color="primary" type="submit" label="Converter"></app-button>
+        </form>
+      </section>
+    </div>
+  </div>
+  <section id="value-container">
+  <div *ngIf="convertedValue !== null || lastTransactionValue !== null">
+    <div class="rate-container">
+      <h1 class="newRate m-0">
+        {{
+          (convertedValue !== null
+            ? convertedValue
+            : lastTransactionValue) | number:'1.2-2'
+        }}
+      </h1>
+      <p class="m-0">
+        {{ convertedValue !== null ? 'Novo Valor Convertido' : 'Último Valor Convertido' }}
+      </p>
+    </div>
+  </div>
+</section>
 
-<mat-form-field appearance="outline" class="full-width">
-  <mat-label>Moeda de Origem</mat-label>
-  <mat-select [(ngModel)]="originCurrency">
-    <mat-option *ngFor="let currency of currencies" [value]="currency">
-      {{ currency }}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
-
-<mat-form-field appearance="outline" class="full-width">
-  <mat-label>Valor</mat-label>
-  <input matInput type="number" [(ngModel)]="amount" />
-</mat-form-field>
-
-<button
-  mat-raised-button
-  color="primary"
-  (click)="convert()"
-  [disabled]="amount == null"
->
-  Converter
-</button>
-
-<div class="result" *ngIf="convertedValue !== null">
-  <p>
-    Valor convertido:
-    <strong>{{ convertedValue | number:'1.2-2' }}</strong>
-    {{ originCurrency === 'Ouro Real' ? 'Tibar' : 'Ouro Real' }}
-  </p>
 </div>

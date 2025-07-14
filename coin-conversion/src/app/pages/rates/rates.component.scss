@@ -1,60 +1,31 @@
+@use '../../../assets/colors/colors' as *;
+
 .page-container {
   padding: 2rem;
 
   h1 {
     margin-bottom: 1rem;
   }
-
-  button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-
-    &:hover {
-      background-color: #0056b3;
-    }
-  }
 }
 
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.6);
+.newRate {
+  font-size: 4rem;
+  padding: 0;
+  color: $color-primary;
+}
+
+.app-rates{
   display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  gap: 2rem;
 }
 
-.modal {
-  background: #fff;
-  padding: 2rem;
-  border-radius: 8px;
-  min-width: 300px;
-
-  h2 {
-    margin-top: 0;
-  }
-
-  input {
-    width: 100%;
-    padding: 0.5rem;
-    margin-top: 0.5rem;
-  }
-
-  .modal-actions {
-    margin-top: 1rem;
-    display: flex;
-    justify-content: flex-end;
-
-    button {
-      margin-left: 1rem;
-    }
-  }
+.rate-container{
+  display: flex;
+  padding: 0;
+  flex-direction: column;
+  gap:4px;
+  justify-content: center;
 }

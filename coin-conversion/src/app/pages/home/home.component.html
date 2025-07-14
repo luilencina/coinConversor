@@ -1,17 +1,15 @@
 <h1>Bem-vindo ao Painel de Conversão</h1>
+<hr id="divider"/>
 
-<mat-grid-list cols="2" rowHeight="2:1.5" gutterSize="20px">
-  <mat-grid-tile>
-    <section>
-        <app-rates></app-rates>
-    </section>
-  </mat-grid-tile>
-  <mat-grid-tile>
-    <section>
-        <app-conversion></app-conversion>
-    </section>
-  </mat-grid-tile>
-</mat-grid-list>
-<div> 
-    <!-- <app-transactions-table>    </app-transactions-table> -->
+<div class="dashboard-grid">
+  <section id="app-rates">
+    <app-rates></app-rates>
+  </section>
+  <section id="app-conversion">
+    <app-conversion></app-conversion>
+  </section>
+</div>
+
+<div class="transactions"> 
+  <app-transaction></app-transaction>
 </div>
