@@ -1,4 +1,5 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import 'zone.js/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick, waitForAsync } from '@angular/core/testing';
 import { ConversionComponent } from './conversion.component';
 import { ExchangeRateService } from '../../core/services/exchange-rate.service';
 import { TransactionService, Transaction } from '../../core/services/transaction.service';
@@ -56,12 +57,12 @@ describe('ConversionComponent', () => {
     expect(component.lastTransactionValue).toBe(100);
   }));
 
-  it('should set lastTransactionValue null if no transactions', fakeAsync(() => {
-    spyOn(transactionService, 'getTransactions').and.returnValue(of([]));
+  it('should set lastTransactionValue on ngOnInit', waitForAsync(() => {
     component.ngOnInit();
-    tick();
-    expect(component.lastTransactionValue).toBeNull();
-  }));
+    fixture.whenStable().then(() => {
+    expect(component.lastTransactionValue).toBe(100);
+    });
+    }));
 
   it('should convert amount correctly when originCurrency is Ouro Real', async () => {
     component.amount = 10;

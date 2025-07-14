@@ -1,8 +1,16 @@
+import 'zone.js';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { RatesComponent } from './rates.component';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ExchangeRateService } from '../../core/services/exchange-rate.service';
 import { of } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { ButtonComponent } from '../../shared/components/button/button.component';
+import { ModalComponent } from '../../shared/components/dialog/modal.component';
 
 class MockExchangeRateService {
   private rate = 10;
@@ -14,12 +22,6 @@ class MockExchangeRateService {
   }
 }
 
-class MockMatDialogRef {
-  afterClosed() {
-    return of(42);
-  }
-}
-
 describe('RatesComponent', () => {
   let component: RatesComponent;
   let fixture: ComponentFixture<RatesComponent>;
@@ -28,7 +30,17 @@ describe('RatesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RatesComponent, MatDialogModule],
+      imports: [
+        RatesComponent,
+        CommonModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatDialogModule,
+        ButtonComponent,
+        ModalComponent // <- ESSENCIAL!
+      ],
       providers: [
         { provide: ExchangeRateService, useClass: MockExchangeRateService }
       ]

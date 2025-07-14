@@ -3,6 +3,19 @@ import { TransactionComponent } from './transactions.component';
 import { TransactionService, Transaction } from '../../core/services/transaction.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { of } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
+import { ButtonComponent } from '../../shared/components/button/button.component';
+import { TransactionDetailDialogComponent } from './transaction-detail-dialog.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import 'zone.js'
 
 class MockTransactionService {
   private transactions: Transaction[] = [
@@ -35,7 +48,22 @@ describe('TransactionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TransactionComponent, MatDialogModule],
+      imports: [
+        TransactionComponent,
+        TransactionDetailDialogComponent,
+        CommonModule,
+        FormsModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatInputModule,
+        MatButtonModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatIconModule,
+        ButtonComponent,
+        BrowserAnimationsModule
+      ],
       providers: [
         { provide: TransactionService, useClass: MockTransactionService },
         { provide: MatDialog, useClass: MockMatDialog }
@@ -46,6 +74,12 @@ describe('TransactionComponent', () => {
     component = fixture.componentInstance;
     transactionService = TestBed.inject(TransactionService);
     dialog = TestBed.inject(MatDialog);
+
+    // Mock paginator necessário para o componente
+    component.paginator = {
+      firstPage: jasmine.createSpy('firstPage')
+    } as unknown as MatPaginator;
+
     fixture.detectChanges();
   });
 
@@ -54,13 +88,11 @@ describe('TransactionComponent', () => {
   });
 
   it('should load transactions on init', fakeAsync(() => {
-    component.ngOnInit();
     tick();
     expect(component.dataSource.data.length).toBeGreaterThan(0);
   }));
 
   it('should apply filters and reset paginator', () => {
-    spyOn(component.paginator, 'firstPage');
     component.filterOrigin = 'Ouro';
     component.applyFilters();
     expect(component.dataSource.filter).toContain('Ouro');
@@ -71,21 +103,24 @@ describe('TransactionComponent', () => {
     spyOn(dialog, 'open').and.callThrough();
     const transaction = component.dataSource.data[0];
     component.openDetails(transaction);
-    expect(dialog.open).toHaveBeenCalled();
+    expect(dialog.open).toHaveBeenCalledWith(TransactionDetailDialogComponent, jasmine.objectContaining({
+      data: transaction,
+      width: '400px'
+    }));
   });
 
-  it('should delete transaction', async () => {
+  it('should delete transaction', fakeAsync(async () => {
     spyOn(transactionService, 'deleteTransaction').and.callThrough();
     const id = component.dataSource.data[0].id!;
     await component.deleteTransaction(id);
     expect(transactionService.deleteTransaction).toHaveBeenCalledWith(id);
-  });
+  }));
 
-  it('should not delete transaction if id is undefined', async () => {
+  it('should not delete transaction if id is undefined', fakeAsync(async () => {
     spyOn(transactionService, 'deleteTransaction');
-    await component.deleteTransaction(undefined);
+    await component.deleteTransaction(undefined as any);
     expect(transactionService.deleteTransaction).not.toHaveBeenCalled();
-  });
+  }));
 
   it('convertTimestamp should convert correctly', () => {
     const ts1 = { seconds: 1638316800, nanoseconds: 0 };

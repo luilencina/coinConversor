@@ -1,6 +1,9 @@
+import 'zone.js/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ButtonComponent } from './button.component';
 import { By } from '@angular/platform-browser';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 describe('ButtonComponent', () => {
   let component: ButtonComponent;
@@ -8,7 +11,7 @@ describe('ButtonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ButtonComponent],
+      imports: [ButtonComponent, MatButtonModule, MatIconModule],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ButtonComponent);
