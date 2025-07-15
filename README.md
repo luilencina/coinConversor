@@ -81,7 +81,6 @@ src/
 │   ├── core/               # Serviços e modelos principais
 │   ├── features/           # Funcionalidades específicas
 │   ├── app.component.ts    # Componente principal
-│   └── app.module.ts       # Módulo principal
 ├── assets/                 # Imagens, fontes, etc
 └── environments/           # Configurações de ambiente
 ```
