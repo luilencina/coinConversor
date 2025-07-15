@@ -16,7 +16,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableDataSource } from '@angular/material/table';
 import { TransactionDetailDialogComponent } from './transaction-detail-dialog.component';
 import { ButtonComponent } from '../../shared/components/button/button.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 import { Subscription } from 'rxjs';
+import { ConfirmDialogComponent } from '../../shared/components/alert/dialog.component';
 
 @Component({
   selector: 'app-transaction',
@@ -30,6 +33,8 @@ import { Subscription } from 'rxjs';
     MatButtonModule,
     MatDialogModule,
     MatFormFieldModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatSelectModule,
     MatIconModule,
     ButtonComponent
@@ -41,12 +46,16 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
   private transactionService = inject(TransactionService);
   private dialog = inject(MatDialog);
 
+  currencies = ['Ouro Real', 'Tibar'];
   displayedColumns: string[] = ['id', 'originCurrency', 'destinationCurrency', 'amount', 'date', 'actions'];
   dataSource = new MatTableDataSource<Transaction>([]);
 
   filterOrigin = '';
   filterDestination = '';
-  filterDate: string = '';
+
+  filterStartDate: string = '';
+  filterEndDate: string = '';
+
   filterMinAmount: number | null = null;
   filterMaxAmount: number | null = null;
 
@@ -61,8 +70,19 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
       const matchOrigin = f.origin ? data.originCurrency.toLowerCase().includes(f.origin.toLowerCase()) : true;
       const matchDestination = f.destination ? data.destinationCurrency.toLowerCase().includes(f.destination.toLowerCase()) : true;
 
-      const dataDate = this.convertTimestamp(data.date)?.toISOString().slice(0, 10);
-      const matchDate = f.date ? dataDate === f.date : true;
+      const dataDate = this.convertTimestamp(data.date);
+      let matchDate = true;
+
+      if (f.startDate) {
+        const startDate = new Date(f.startDate);
+        matchDate = matchDate && dataDate >= startDate;
+      }
+
+      if (f.endDate) {
+        const endDate = new Date(f.endDate);
+        endDate.setHours(23, 59, 59, 999);
+        matchDate = matchDate && dataDate <= endDate;
+      }
 
       const matchMinAmount = f.minAmount != null ? data.amount >= f.minAmount : true;
       const matchMaxAmount = f.maxAmount != null ? data.amount <= f.maxAmount : true;
@@ -71,9 +91,19 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
     };
 
     this.transactionsSub = this.transactionService.getTransactions().subscribe(transactions => {
-      this.dataSource.paginator = this.paginator; 
-      this.dataSource.data = transactions;
-      this.applyFilters(); 
+      const sorted = this.sortTransactionsByDate(transactions);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.data = sorted;
+      this.applyFilters();
+    });
+  }
+
+  sortTransactionsByDate(transactions: Transaction[]): Transaction[] {
+    return transactions.sort((a, b) => {
+      const dateA = this.convertTimestamp(a.date)?.getTime() || 0;
+      const dateB = this.convertTimestamp(b.date)?.getTime() || 0;
+
+      return dateB - dateA;
     });
   }
 
@@ -82,11 +112,11 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.transactionsSub?.unsubscribe(); 
+    this.transactionsSub?.unsubscribe();
   }
 
-  convertTimestamp(ts: any): Date | null {
-    if (!ts) return null;
+  convertTimestamp(ts: any): Date {
+    if (!ts) return new Date(0);
 
     if (ts.seconds !== undefined && ts.nanoseconds !== undefined) {
       return new Date(ts.seconds * 1000 + ts.nanoseconds / 1e6);
@@ -96,14 +126,15 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
       return new Date(ts);
     }
 
-    return null;
+    return new Date(0);
   }
 
   applyFilters() {
     const filterValue = {
       origin: this.filterOrigin,
       destination: this.filterDestination,
-      date: this.filterDate,
+      startDate: this.filterStartDate,
+      endDate: this.filterEndDate,
       minAmount: this.filterMinAmount,
       maxAmount: this.filterMaxAmount,
     };
@@ -124,6 +155,19 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
 
   async deleteTransaction(id?: string) {
     if (!id) return;
-    await this.transactionService.deleteTransaction(id);
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        width: '350px',
+        data: {
+          title: 'Confirmação',
+          bodyHtml: `<p>Tem certeza que deseja deletar a transação <strong>ID: ${id}</strong>?</p>`
+        }
+      });
+
+      const confirmed = await dialogRef.afterClosed().toPromise();
+      if (confirmed) {
+        await this.transactionService.deleteTransaction(id);
+      }
   }
+
 }

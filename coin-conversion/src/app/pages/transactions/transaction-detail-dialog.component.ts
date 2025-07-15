@@ -15,7 +15,7 @@ import { ButtonComponent } from '../../shared/components/button/button.component
       <p><strong>Origem:</strong> {{ data.originCurrency }}</p>
       <p><strong>Destino:</strong> {{ data.destinationCurrency }}</p>
       <p><strong>Valor:</strong> {{ data.amount }}</p>
-      <p><strong>Data/Hora:</strong> {{ data.date | date:'short' }}</p>
+      <p><strong>Data/Hora:</strong> {{ convertTimestamp(data.date) | date:'medium' }}</p>
     </mat-dialog-content>
     <mat-dialog-actions align="end">
       <app-button mat-dialog-close label="Fechar"/>
@@ -36,4 +36,19 @@ export class TransactionDetailDialogComponent {
   close() {
     this.dialogRef.close();
   }
+
+  convertTimestamp(ts: any): Date | null {
+    if (!ts) return null;
+
+    if (ts.seconds !== undefined && ts.nanoseconds !== undefined) {
+      return new Date(ts.seconds * 1000 + ts.nanoseconds / 1e6);
+    }
+
+    if (typeof ts === 'string' || ts instanceof Date) {
+      return new Date(ts);
+    }
+
+    return null;
+  }
+
 }

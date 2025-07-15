@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -8,6 +8,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { ExchangeRateService } from '../../core/services/exchange-rate.service';
 import { TransactionService, Transaction } from '../../core/services/transaction.service';
 import { ButtonComponent } from '../../shared/components/button/button.component';
+import { ConfirmDialogComponent } from '../../shared/components/alert/dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-conversion',
@@ -19,12 +22,15 @@ import { ButtonComponent } from '../../shared/components/button/button.component
     MatSelectModule,
     MatInputModule,
     MatButtonModule,
+    ConfirmDialogComponent,
     ButtonComponent
   ],
   templateUrl: './conversion.component.html',
   styleUrls: ['./conversion.component.scss']
 })
 export class ConversionComponent implements OnInit {
+  private dialog = inject(MatDialog);
+
   currencies = ['Ouro Real', 'Tibar'];
 
   originCurrency = 'Ouro Real';
@@ -55,32 +61,55 @@ export class ConversionComponent implements OnInit {
     });
   }
 
-  async convert() {
-    const rate = this.exchangeRate.getRate();
+ async convert() {
+  const rate = this.exchangeRate.getRate();
 
-    if (this.amount == null || !this.originCurrency || !this.destinationCurrency) {
-      this.convertedValue = null;
-      return;
-    }
-
-    this.convertedValue =
-      this.originCurrency === 'Ouro Real'
-        ? this.amount * rate
-        : this.amount / rate;
-
-    const transaction: Transaction = {
-      originCurrency: this.originCurrency,
-      destinationCurrency: this.destinationCurrency,
-      amount: this.convertedValue,
-      date: new Date(),
-    };
-
-    try {
-      await this.transactionService.addTransaction(transaction);
-      alert('Transação salva com sucesso!');
-    } catch (error) {
-      console.error('Erro ao salvar transação:', error);
-      alert('Erro ao salvar transação.');
-    }
+  if (this.amount == null || !this.originCurrency || !this.destinationCurrency) {
+    this.convertedValue = null;
+    return;
   }
+
+  if (this.amount < 0) {
+    await this.showAlert('O valor não pode ser negativo.');
+    this.convertedValue = null;
+    return;
+  }
+
+  if (this.originCurrency === this.destinationCurrency) {
+    this.convertedValue = this.amount;
+    await this.showAlert('Moeda de origem e destino são iguais. Valor mantido.');
+    return;
+  }
+
+  this.convertedValue =
+    this.originCurrency === 'Ouro Real' ? this.amount * rate : this.amount / rate;
+
+  const transaction: Transaction = {
+    originCurrency: this.originCurrency,
+    destinationCurrency: this.destinationCurrency,
+    amount: this.convertedValue,
+    date: new Date(),
+  };
+
+  try {
+    await this.transactionService.addTransaction(transaction);
+    await this.showAlert('Transação salva com sucesso!');
+  } catch (error) {
+    console.error('Erro ao salvar transação:', error);
+    await this.showAlert('Erro ao salvar transação.');
+  }
+  }
+  async showAlert(message: string) {
+    await firstValueFrom(
+      this.dialog.open(ConfirmDialogComponent, {
+        width: '350px',
+        data: {
+          title: 'Aviso',
+          bodyText: message,
+          onlyCloseButton: true,
+        },
+      }).afterClosed()
+    );
+  }
+
 }

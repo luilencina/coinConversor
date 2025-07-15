@@ -20,10 +20,10 @@
         
           <mat-form-field appearance="outline">
             <mat-label>Valor</mat-label>
-            <input matInput type="number" [(ngModel)]="amount" name="amount" required />
+            <input matInput min="0" type="number" [(ngModel)]="amount" name="amount" required />
           </mat-form-field>
         
-          <app-button mat-raised-button color="primary" type="submit" label="Converter"></app-button>
+          <app-button label="Converter"/>
         </form>
       </section>
     </div>

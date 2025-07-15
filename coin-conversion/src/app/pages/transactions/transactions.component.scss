@@ -68,3 +68,29 @@ app-transaction{
 mat-paginator{
   width: 100%;
 }
+
+@media (max-width: 600px) {
+  .filters {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+
+  .filters mat-form-field {
+    width: 100%;
+  }
+
+  .title {
+    text-align: center;
+  }
+
+  mat-table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  mat-paginator {
+    width: 100%;
+  }
+}

@@ -14,12 +14,17 @@ body.dark-mode {
 }
 
 body h1{
-  color: $color-primary;
+  color: $color-dark-text;
 }
 
-body.dark-mode hr{
-  border-color: $color-intermediary-bg;
+body .mat-mdc-dialog-surface.mdc-dialog__surface{
+  background-color: $color-bg-light;
 }
+
+body.dark-mode .mat-mdc-dialog-surface.mdc-dialog__surface{
+  background-color: $color-intermediary-bg;
+}
+
 
 body hr{
   border-color: $color-grey;
@@ -29,9 +34,6 @@ body h2{
   color: $color-text
 }
 
-body.dark-mode h1{
-  color: $color-primary;
-}
 
 body.dark-mode h2{
   color: $color-dark-text
@@ -39,14 +41,6 @@ body.dark-mode h2{
 
 body .navbar button mat-icon{
   color: $color-dark-text;
-}
-
-body.dark-mode .navbar button mat-icon{
-  color: $color-primary;
-}
-
-body.dark-mode .navbar {
-  background-color: $color-text;
 }
 
 body.dark-mode .navbar a {
@@ -111,10 +105,30 @@ button{
 
 body.dark-mode button{
   background-color: $color-primary!important;
-  color: $color-text!important;
 }
 
 body .mdc-icon-button, 
 body.dark-mode .mdc-icon-button {
   background-color: transparent!important;
+}
+
+body button.mat-calendar-body-cell{
+  background-color: transparent!important;
+}
+
+.mat-calendar-body-selected{
+  background-color: $color-primary!important;
+  color: $color-dark-text!important;
+}
+
+.mat-calendar-body-today:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical){
+  border-color: $color-primary!important;
+}
+
+body .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-text-field__input{
+  color: $color-text;
+}
+
+body.dark-mode .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-text-field__input{
+  color: $color-dark-text;
 }
