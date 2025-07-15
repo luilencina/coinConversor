@@ -28,7 +28,7 @@ O projeto é ideal para quem deseja aprender Angular na prática, usando formul�
 - Angular 20  
 - TypeScript  
 - Angular Material (componentes UI)  
-- API pública para taxas de câmbio (https://exchangerate-api.com ou similar)  
+- Firebase
 - HTML5 / CSS3  
 
 ---
