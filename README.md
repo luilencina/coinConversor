@@ -1,8 +1,9 @@
 # Coin Conversor
 
-![Projeto Angular](https://img.shields.io/badge/Angular-v20-blue) ![TypeScript](https://img.shields.io/badge/TypeScript-%23007ACC.svg?style=flat&logo=typescript&logoColor=white) ![MIT License](https://img.shields.io/badge/license-MIT-green)
-
----
+![Angular](https://img.shields.io/badge/Angular-%23DD0031.svg?style=flat&logo=angular&logoColor=white)
+![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=flat&logo=firebase&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
+![Material Design](https://img.shields.io/badge/Angular_Material-007ACC?style=flat&logo=angular&logoColor=white)
 
 ## 🚀 Sobre o projeto
 
